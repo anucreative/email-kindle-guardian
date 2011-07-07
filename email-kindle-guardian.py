@@ -1,4 +1,4 @@
-#!/bin/py
+#!/usr/bin/python
 from urllib2 import Request, urlopen, HTTPError, URLError
 from mailer import Mailer, Message
 import datetime
