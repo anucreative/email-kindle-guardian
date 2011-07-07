@@ -1,5 +1,5 @@
 # Email Kindle Guardian
-This is a simple python programme to download they day's *.mobi copy of the Guardian from mythic-beasts.com and email it to a Kindle.
+This is a simple python programme to download they day's *.mobi copy of the Guardian from mythic-beasts.com (Mark did most of the work: http://mythic-beasts.com/~mark/random/guardian-for-kindle/) and send it to a Kindle email address over email.
 
 This programme is probably best run as a daily cron job to send you a copy of the paper each morning. I have mine to send at 08:00.
 
