@@ -1,13 +1,19 @@
 #!/usr/bin/python
 from urllib2 import Request, urlopen, HTTPError, URLError
 from mailer import Mailer, Message
+from ConfigParser import ConfigParser
 import datetime
 
-# Change these vales to something particular to you
-fromEmail = "me@authorisesender.com"
-kindleEmail = "me@free.kindle.com"
+def setup():
+    config = ConfigParser()
+    config.readfp(open("config.ini"))
+    settings = {}
+    settings['fromEmail'] = config.get("EmailKindleGuardian","FromEmail")
+    settings['kindleEmail'] = config.get("EmailKindleGuardian","KindleEmail")
+    return settings
 
-def emailKindleGuardian(fromEmail, kindleEmail):
+def emailKindleGuardian():
+    settings = setup()
     now = datetime.datetime.now()
     fileName = "gdn-" + format(now.year, "02d") + "-" + format(now.month, "02d") + "-" + format(now.day, "02d") + ".mobi"
     url = "http://mythic-beasts.com/~mark/random/guardian-for-kindle/" + fileName
@@ -21,10 +27,11 @@ def emailKindleGuardian(fromEmail, kindleEmail):
         localFile.write(f.read())
         localFile.close()
         # Yey!, we've downloaded the file. Email it!
-        message = Message(From=fromEmail, To=[kindleEmail], Subject="Guardian " + fileName)
+        message = Message(From=settings['fromEmail'], To=[settings['kindleEmail']], Subject="Guardian " + fileName)
         message.attach("/tmp/" + fileName)
         sender = Mailer("localhost")
         sender.send(message)
+        print "Yey! I've sent today's Guardian to " + settings['kindleEmail']
 
     except HTTPError, e:
         print e.code, url
@@ -32,5 +39,5 @@ def emailKindleGuardian(fromEmail, kindleEmail):
         print e.code, url
 
 
-emailKindleGuardian(fromEmail, kindleEmail)
+emailKindleGuardian()
 
