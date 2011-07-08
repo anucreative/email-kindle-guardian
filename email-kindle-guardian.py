@@ -6,7 +6,7 @@ import datetime, os
 
 def setup():
     config = ConfigParser()
-    config.readfp(open(os.getcwd() . "/config.ini"))
+    config.readfp(open(os.getcwd() + "/config.ini"))
     settings = {}
     settings['fromEmail'] = config.get("EmailKindleGuardian","FromEmail")
     settings['kindleEmail'] = config.get("EmailKindleGuardian","KindleEmail")
