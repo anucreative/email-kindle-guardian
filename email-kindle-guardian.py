@@ -11,16 +11,15 @@ def setup():
         config.readfp(f)
     settings = {}
     try:
-        settings['from_email'] = config.get("EmailKindleGuardian","FromEmail")
-        settings['kindle_email'] = config.get("EmailKindleGuardian","KindleEmail")
+        settings['from_email'] = config.get("EmailKindleGuardian","from_email")
+        settings['kindle_email'] = config.get("EmailKindleGuardian","kindle_email")
     except:
         raise SystemExit('buggered up')
         
     return settings
 
 
-def email_kindle_guardian():
-    settings = setup()
+def email_kindle_guardian(from_email, kindle_email):
     now = datetime.datetime.now()
     file_name = "gdn-" + format(now.year, "02d") + "-" + format(now.month, "02d") + "-" + format(now.day, "02d") + ".mobi"
     url = "http://mythic-beasts.com/~mark/random/guardian-for-kindle/" + file_name
@@ -35,11 +34,11 @@ def email_kindle_guardian():
             local_file.write(f.read())
 
         # Yey!, we've downloaded the file. Email it!
-        message = Message(From=settings['from_email'], To=[settings['kindle_email']], Subject="Guardian " + file_name)
+        message = Message(From=from_email, To=[kindle_email], Subject="Guardian " + file_name)
         message.attach("/tmp/" + file_name)
         sender = Mailer("localhost")
         sender.send(message)
-        print "Yey! I've sent today's Guardian to " + settings['kindle_email']
+        print "Yey! I've sent today's Guardian to " + kindle_email
 
     except HTTPError, e:
         print e.code, url
@@ -49,4 +48,5 @@ def email_kindle_guardian():
 
 
 if __name__ == '__main__':
-    email_kindle_guardian()
+    settings = setup()
+    email_kindle_guardian(settings['from_email'], settings['kindle_email'])
