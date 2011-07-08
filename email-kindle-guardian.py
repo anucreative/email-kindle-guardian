@@ -2,11 +2,15 @@
 from urllib2 import Request, urlopen, HTTPError, URLError
 from mailer import Mailer, Message
 from ConfigParser import ConfigParser
-import datetime, os
+import datetime, sys
+
+print 
 
 def setup():
     config = ConfigParser()
-    config.readfp(open(os.getcwd() + "/config.ini"))
+    configFile = sys.path[0] + "/config.ini"
+    print configFile
+    config.readfp(open(configFile))
     settings = {}
     settings['fromEmail'] = config.get("EmailKindleGuardian","FromEmail")
     settings['kindleEmail'] = config.get("EmailKindleGuardian","KindleEmail")
