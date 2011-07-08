@@ -7,11 +7,17 @@ from mailer import Mailer, Message
 
 def setup():
     config = ConfigParser()
-    config.readfp(open(sys.path[0] + "/config.ini"))
+    with open(sys.path[0] + "/config.ini") as f:
+        config.readfp(f)
     settings = {}
-    settings['from_email'] = config.get("EmailKindleGuardian","FromEmail")
-    settings['kindle_email'] = config.get("EmailKindleGuardian","KindleEmail")
+    try:
+        settings['from_email'] = config.get("EmailKindleGuardian","FromEmail")
+        settings['kindle_email'] = config.get("EmailKindleGuardian","KindleEmail")
+    except:
+        raise SystemExit('buggered up')
+        
     return settings
+
 
 def email_kindle_guardian():
     settings = setup()
@@ -20,23 +26,27 @@ def email_kindle_guardian():
     url = "http://mythic-beasts.com/~mark/random/guardian-for-kindle/" + file_name
     # Download the file!
     req = Request(url)
+
     try:
         f = urlopen(req)
         print "Downloading " + url
         # Download the file to tmp
-        local_file = open("/tmp/" + file_name, "w+")
-        local_file.write(f.read())
-        local_file.close()
+        with open("/tmp/" + file_name, "w+") as local_file:
+            local_file.write(f.read())
+
         # Yey!, we've downloaded the file. Email it!
         message = Message(From=settings['from_email'], To=[settings['kindle_email']], Subject="Guardian " + file_name)
         message.attach("/tmp/" + file_name)
         sender = Mailer("localhost")
         sender.send(message)
         print "Yey! I've sent today's Guardian to " + settings['kindle_email']
+
     except HTTPError, e:
         print e.code, url
+
     except URLError, e:
         print e.code, url
 
-email_kindle_guardian()
 
+if __name__ == '__main__':
+    email_kindle_guardian()
