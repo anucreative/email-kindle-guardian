@@ -8,9 +8,7 @@ print
 
 def setup():
     config = ConfigParser()
-    configFile = sys.path[0] + "/config.ini"
-    print configFile
-    config.readfp(open(configFile))
+    config.readfp(open(sys.path[0] + "/config.ini"))
     settings = {}
     settings['fromEmail'] = config.get("EmailKindleGuardian","FromEmail")
     settings['kindleEmail'] = config.get("EmailKindleGuardian","KindleEmail")
