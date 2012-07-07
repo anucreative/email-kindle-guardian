@@ -15,10 +15,10 @@ Requires:
 - cron
 
 Create a config.js file with the following:
-var config = {
-	kindleEmail: "Your kindle email address",
-	fromEmail: "Your GMail address",
-	fromPassword: "Your GMail password"
-};
+	var config = {
+		kindleEmail: "Your kindle email address",
+		fromEmail: "Your GMail address",
+		fromPassword: "Your GMail password"
+	};
 
-module.exports = config;
+	module.exports = config;
