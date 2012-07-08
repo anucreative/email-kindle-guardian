@@ -7,8 +7,9 @@ fs = require("fs"),
 url = require("url"),
 http = require("http"),
 cronJob = require("cron").CronJob,
-config = require("./config"),
-
+kindleEmailAddress = process.env['KINDLE_EMAIL'],
+gmailAddress = process.env['GMAIL_ADDRESS'],
+gmailPassword = process.env['GMAIL_PASSWORD'],
 
 sendGuardian = function(filePath) {
     fs.readFile(filePath, function(err, data) {
@@ -19,15 +20,15 @@ sendGuardian = function(filePath) {
             var smtpTransport = nodemailer.createTransport("SMTP",{
                 service: "Gmail",
                 auth: {
-                    user: config.fromEmail,
-                    pass: config.fromPassword
+                    user: gmailAddress,
+                    pass: gmailPassword
                 }
             });
 
             // Setup e-mail data
             var mailOptions = {
-                from: config.fromEmail,
-                to: config.kindleEmail,
+                from: gmailAddress,
+                to: kindleEmailAddress,
                 subject: "Guardian",
                 attachments: [{
                     filename: filePath.split("/").pop(),
