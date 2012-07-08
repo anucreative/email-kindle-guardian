@@ -1,0 +1,16 @@
+{
+  "name": "email-kindle-guardian",
+  "subdomain": "email-kindle-guardian",
+  "scripts": {
+    "start": "app.js"
+  },
+  "version": "0.1.1",
+  "engines": {
+    "node": "v0.6.x"
+  },
+  "dependencies": {
+    "cron": "0.3.x",
+    "moment": "1.6.x",
+    "nodemailer": "0.3.x"
+  }
+}
