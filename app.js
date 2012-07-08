@@ -7,7 +7,7 @@ fs = require("fs"),
 url = require("url"),
 http = require("http"),
 cronJob = require("cron").CronJob,
-kindleEmailAddress = process.env['KINDLE_EMAIL'],
+kindleEmail = process.env['KINDLE_EMAIL'],
 gmailAddress = process.env['GMAIL_ADDRESS'],
 gmailPassword = process.env['GMAIL_PASSWORD'],
 
@@ -28,7 +28,7 @@ sendGuardian = function(filePath) {
             // Setup e-mail data
             var mailOptions = {
                 from: gmailAddress,
-                to: kindleEmailAddress,
+                to: kindleEmail,
                 subject: "Guardian",
                 attachments: [{
                     filename: filePath.split("/").pop(),
