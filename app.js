@@ -38,7 +38,7 @@ sendGuardian = function(filePath) {
 
             // Send mail with defined transport object
             smtpTransport.sendMail(mailOptions, function(err, response){
-                if (err) console.log(error);
+                if (err) console.log(err);
                 else {
                     console.log("Message sent: " + response.message);
                     // TODO: Remove .mobi file as we don"t need it anymore
@@ -97,7 +97,8 @@ job = new cronJob({
 });
 
 
-job.start();
+// job.start();
+downloadGuardian();
 
 
 
